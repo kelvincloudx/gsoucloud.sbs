@@ -1,0 +1,137 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { ARTICLE_LIST } from '../../data/articles';
+import { SITE } from '../../data/site';
+
+const pageTitle = 'Gsou Cloud 知识文章档案馆';
+const pageDescription = '汇总 Gsou Cloud 的七篇原创知识文章，深入解析网络路由、套餐价格换算、流量行为及客户端维护教程。';
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    'itemListElement': [
+      { '@type': 'ListItem', 'position': 1, 'name': '首页', 'item': `${SITE.domain}/` },
+      { '@type': 'ListItem', 'position': 2, 'name': '知识文章', 'item': `${SITE.domain}/library/` }
+    ]
+  }
+];
+---
+
+<BaseLayout title={`${pageTitle} | ${SITE.brandName}`} description={pageDescription} canonicalPath="/library/" jsonLd={jsonLd}>
+  <div class="container" style="padding-top: 3rem; padding-bottom: 5rem;">
+    <nav class="breadcrumb">
+      <a href="/">首页</a> <span class="sep">/</span>
+      <span>知识文章</span>
+    </nav>
+
+    <header style="margin-bottom: 3.5rem;">
+      <div class="section-tag">EDITORIAL LIBRARY ARCHIVE</div>
+      <h1 class="section-title">Gsou Cloud 知识文章档案馆</h1>
+      <p class="section-subtitle">
+        收录全部 7 篇原创技术与使用指南文章，帮助你建立科学的网络知识体系。
+      </p>
+    </header>
+
+    <div class="library-grid">
+      {ARTICLE_LIST.map(art => (
+        <article class="art-index-card">
+          <div class="art-head">
+            <span class="art-cat font-mono">{art.category}</span>
+            <time class="art-date font-mono">{art.publishDate}</time>
+          </div>
+          <h2><a href={art.urlPath}>{art.title}</a></h2>
+          <p>{art.summary}</p>
+          <div class="art-foot">
+            <a href={art.urlPath} class="read-link">阅读完整文章 &rarr;</a>
+            <span class="read-time font-mono">{art.readTime}</span>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+.library-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+}
+
+.art-index-card {
+  background-color: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  padding: 2.25rem;
+  display: flex;
+  flex-direction: column;
+  border-radius: 4px;
+  transition: var(--transition);
+}
+
+.art-index-card:hover {
+  border-color: var(--color-terracotta);
+  transform: translateY(-2px);
+}
+
+.art-head {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  margin-bottom: 1rem;
+}
+
+.art-cat {
+  color: var(--color-terracotta);
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.art-date {
+  color: var(--color-text-muted);
+}
+
+.art-index-card h2 {
+  font-size: 1.35rem;
+  line-height: 1.4;
+  margin-bottom: 1rem;
+}
+
+.art-index-card h2 a:hover {
+  color: var(--color-terracotta);
+}
+
+.art-index-card p {
+  font-size: 0.95rem;
+  color: var(--color-text-muted);
+  line-height: 1.6;
+  margin-bottom: 1.75rem;
+  flex-grow: 1;
+}
+
+.art-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--color-border);
+  padding-top: 1rem;
+}
+
+.read-link {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  color: var(--color-terracotta);
+  font-weight: 600;
+}
+
+.read-time {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
+@media (max-width: 768px) {
+  .library-grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>

@@ -1,0 +1,542 @@
+---
+import { ACTIVE_PLANS } from '../data/plans';
+import { SITE } from '../data/site';
+---
+
+<div class="plan-matrix-wrapper">
+  <!-- Cycle selector tabs -->
+  <div class="cycle-selector">
+    <span class="selector-label">选择付款周期：</span>
+    <div class="selector-buttons">
+      <button class="cycle-btn active" data-cycle="monthly">月付 (1个月)</button>
+      <button class="cycle-btn" data-cycle="quarterly">季付 (3个月)</button>
+      <button class="cycle-btn" data-cycle="semiAnnual">半年付 (6个月)</button>
+      <button class="cycle-btn" data-cycle="annual">年付 (12个月)</button>
+    </div>
+  </div>
+
+  <!-- Horizontal Comparison Matrix Table (Desktop & Tablet) -->
+  <div class="matrix-table-container">
+    <table class="matrix-table">
+      <thead>
+        <tr>
+          <th class="col-feature">套餐属性 / 周期</th>
+          {ACTIVE_PLANS.map(plan => (
+            <th class={`col-plan ${plan.popular ? 'popular-header' : ''}`}>
+              {plan.popular && <span class="badge-pop">推荐</span>}
+              <div class="plan-head-title">{plan.name}</div>
+              <div class="plan-head-sub">{plan.tagline}</div>
+            </th>
+          ))}
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="row-label">月度流量配额</td>
+          {ACTIVE_PLANS.map(plan => (
+            <td class="row-value font-mono-highlight">{plan.bandwidth}</td>
+          ))}
+        </tr>
+
+        <!-- Price breakdown row -->
+        <tr class="price-row">
+          <td class="row-label">当前选定金额</td>
+          {ACTIVE_PLANS.map(plan => (
+            <td class="row-value">
+              {plan.cycles.map(c => (
+                <div class={`price-box cycle-box cycle-${c.cycleKey} ${c.cycleKey === 'monthly' ? 'active' : ''}`}>
+                  <div class="price-amount">
+                    <span class="currency">¥</span>
+                    <span class="num">{c.price}</span>
+                    <span class="period">/{c.periodText}</span>
+                  </div>
+                  <div class="price-equiv">{c.monthlyEquivalentText}</div>
+                </div>
+              ))}
+            </td>
+          ))}
+        </tr>
+
+        <tr>
+          <td class="row-label">适用使用场景</td>
+          {ACTIVE_PLANS.map(plan => (
+            <td class="row-value scene-desc">{plan.suitableFor}</td>
+          ))}
+        </tr>
+
+        <tr>
+          <td class="row-label">核心确认权益</td>
+          {ACTIVE_PLANS.map(plan => (
+            <td class="row-value">
+              <ul class="feature-list">
+                {plan.confirmedFeatures.map(feat => (
+                  <li>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                    <span>{feat}</span>
+                  </li>
+                ))}
+              </ul>
+            </td>
+          ))}
+        </tr>
+
+        <tr class="action-row">
+          <td class="row-label">开通订阅</td>
+          {ACTIVE_PLANS.map(plan => (
+            <td class="row-value">
+              <a
+                href={SITE.affUrl}
+                target={SITE.affTarget}
+                rel={SITE.affRel}
+                class={`btn ${plan.popular ? 'btn-primary' : 'btn-secondary'} full-btn`}
+              >
+                购买套餐
+              </a>
+            </td>
+          ))}
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Mobile Card View (Vertical Accordion/Stack to prevent horizontal clipping) -->
+  <div class="mobile-plans-stack">
+    {ACTIVE_PLANS.map(plan => (
+      <div class={`mobile-plan-card ${plan.popular ? 'popular-card' : ''}`}>
+        {plan.popular && <div class="mobile-pop-badge">主流精选</div>}
+        <div class="mobile-card-head">
+          <h3>{plan.name}</h3>
+          <p>{plan.tagline}</p>
+          <div class="mobile-bandwidth">{plan.bandwidth}</div>
+        </div>
+
+        <div class="mobile-price-selector">
+          <div class="mobile-price-display">
+            {plan.cycles.map(c => (
+              <div class={`mobile-price-box cycle-box cycle-${c.cycleKey} ${c.cycleKey === 'monthly' ? 'active' : ''}`}>
+                <div class="m-price"><span class="cur">¥</span>{c.price} <span class="per">/{c.periodText}</span></div>
+                <div class="m-sub">{c.monthlyEquivalentText}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div class="mobile-card-body">
+          <p class="mobile-scene">{plan.suitableFor}</p>
+          <ul class="mobile-features">
+            {plan.confirmedFeatures.map(feat => (
+              <li>✓ {feat}</li>
+            ))}
+          </ul>
+        </div>
+
+        <a
+          href={SITE.affUrl}
+          target={SITE.affTarget}
+          rel={SITE.affRel}
+          class="btn btn-primary full-btn"
+        >
+          立即订阅
+        </a>
+      </div>
+    ))}
+  </div>
+
+  <!-- Full Static Price Reference Grid (SEO crawlable) -->
+  <div class="static-seo-prices">
+    <h4>Gsou Cloud 全部 12 项公开参考价格一览表</h4>
+    <div class="seo-price-grid">
+      {ACTIVE_PLANS.map(plan => (
+        <div class="seo-plan-col">
+          <strong>{plan.name} ({plan.bandwidth})</strong>
+          <ul>
+            {plan.cycles.map(c => (
+              <li>{c.cycleName}：¥{c.price} ({c.monthlyEquivalentText})</li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+
+<style>
+.plan-matrix-wrapper {
+  margin: 2rem 0;
+}
+
+.cycle-selector {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.selector-label {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: var(--color-graphite);
+}
+
+.selector-buttons {
+  display: flex;
+  background-color: var(--color-ivory);
+  padding: 0.25rem;
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  gap: 0.25rem;
+}
+
+.cycle-btn {
+  background: none;
+  border: none;
+  padding: 0.6rem 1.25rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  border-radius: 2px;
+  transition: var(--transition);
+}
+
+.cycle-btn:hover {
+  color: var(--color-graphite);
+}
+
+.cycle-btn.active {
+  background-color: var(--color-graphite);
+  color: var(--color-gold);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Matrix Table Desktop */
+.matrix-table-container {
+  overflow-x: auto;
+  background-color: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+}
+
+.matrix-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.matrix-table th, .matrix-table td {
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--color-border);
+  vertical-align: middle;
+}
+
+.matrix-table th {
+  background-color: var(--color-ivory);
+  border-bottom: 2px solid var(--color-graphite);
+}
+
+.col-feature {
+  width: 22%;
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  color: var(--color-graphite);
+}
+
+.col-plan {
+  width: 26%;
+  position: relative;
+}
+
+.popular-header {
+  background-color: #FAF6ED !important;
+}
+
+.badge-pop {
+  position: absolute;
+  top: 0.5rem;
+  right: 1rem;
+  font-size: 0.75rem;
+  background-color: var(--color-terracotta);
+  color: #FFF;
+  padding: 0.15rem 0.5rem;
+  border-radius: 2px;
+  font-weight: 600;
+}
+
+.plan-head-title {
+  font-family: var(--font-serif);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--color-graphite);
+}
+
+.plan-head-sub {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  margin-top: 0.25rem;
+}
+
+.row-label {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  color: var(--color-graphite);
+  background-color: #FAF9F6;
+}
+
+.font-mono-highlight {
+  font-family: var(--font-mono);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--color-terracotta);
+}
+
+.price-row td {
+  background-color: #FDFCF9;
+}
+
+.cycle-box {
+  display: none;
+}
+
+.cycle-box.active {
+  display: block;
+}
+
+.price-amount {
+  font-size: 2rem;
+  font-weight: 700;
+  font-family: var(--font-serif);
+  color: var(--color-graphite);
+  line-height: 1;
+}
+
+.price-amount .currency {
+  font-size: 1.25rem;
+  vertical-align: super;
+  margin-right: 0.1rem;
+  color: var(--color-terracotta);
+}
+
+.price-amount .period {
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: var(--color-text-muted);
+}
+
+.price-equiv {
+  font-size: 0.85rem;
+  color: var(--color-terracotta);
+  margin-top: 0.4rem;
+  font-family: var(--font-mono);
+  font-weight: 500;
+}
+
+.scene-desc {
+  font-size: 0.9rem;
+  color: var(--color-text-dark);
+  line-height: 1.5;
+}
+
+.feature-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.feature-list li {
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--color-text-dark);
+}
+
+.feature-list svg {
+  color: var(--color-terracotta);
+  flex-shrink: 0;
+}
+
+.full-btn {
+  width: 100%;
+}
+
+/* Mobile Layout Stack */
+.mobile-plans-stack {
+  display: none;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.mobile-plan-card {
+  background-color: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  padding: 1.5rem;
+  border-radius: 4px;
+  position: relative;
+}
+
+.popular-card {
+  border: 2px solid var(--color-terracotta);
+}
+
+.mobile-pop-badge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background-color: var(--color-terracotta);
+  color: #FFF;
+  font-size: 0.75rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 2px;
+  font-weight: 600;
+}
+
+.mobile-card-head h3 {
+  font-size: 1.35rem;
+  margin-bottom: 0.25rem;
+}
+
+.mobile-card-head p {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+}
+
+.mobile-bandwidth {
+  font-family: var(--font-mono);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-terracotta);
+  margin: 0.75rem 0;
+}
+
+.mobile-price-display {
+  margin: 1rem 0;
+  padding: 1rem;
+  background-color: var(--color-ivory);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+}
+
+.m-price {
+  font-size: 1.75rem;
+  font-weight: 700;
+  font-family: var(--font-serif);
+}
+
+.m-price .cur {
+  font-size: 1.1rem;
+  color: var(--color-terracotta);
+}
+
+.m-price .per {
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: var(--color-text-muted);
+}
+
+.m-sub {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--color-terracotta);
+  margin-top: 0.25rem;
+}
+
+.mobile-scene {
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  color: var(--color-text-dark);
+}
+
+.mobile-features {
+  list-style: none;
+  font-size: 0.85rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-bottom: 1.25rem;
+}
+
+/* Static SEO Prices */
+.static-seo-prices {
+  margin-top: 3rem;
+  padding: 1.5rem;
+  background-color: var(--color-ivory);
+  border: 1px dashed var(--color-border);
+  border-radius: 4px;
+}
+
+.static-seo-prices h4 {
+  font-size: 1.05rem;
+  margin-bottom: 1rem;
+  color: var(--color-graphite);
+}
+
+.seo-price-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  font-size: 0.875rem;
+}
+
+.seo-plan-col ul {
+  list-style: none;
+  margin-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  color: var(--color-text-muted);
+}
+
+@media (max-width: 860px) {
+  .matrix-table-container {
+    display: none;
+  }
+  .mobile-plans-stack {
+    display: flex;
+  }
+  .seo-price-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+</style>
+
+<script>
+  function initPlanMatrix() {
+    const cycleBtns = document.querySelectorAll<HTMLButtonElement>('.cycle-btn');
+    const cycleBoxes = document.querySelectorAll<HTMLElement>('.cycle-box');
+
+    cycleBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const selectedCycle = btn.getAttribute('data-cycle');
+        if (!selectedCycle) return;
+
+        // Update button states
+        cycleBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        // Update visible price boxes
+        cycleBoxes.forEach(box => {
+          if (box.classList.contains(`cycle-${selectedCycle}`)) {
+            box.classList.add('active');
+          } else {
+            box.classList.remove('active');
+          }
+        });
+      });
+    });
+  }
+
+  // Execute on DOM ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initPlanMatrix);
+  } else {
+    initPlanMatrix();
+  }
+</script>

@@ -1,0 +1,157 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE } from '../data/site';
+
+const pageTitle = 'Gsou Cloud 新手使用入门指南';
+const pageDescription = '从注册账号、选择适合的流量套餐到在桌面与移动端配置订阅链接的四步快速上手流程。';
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    'itemListElement': [
+      { '@type': 'ListItem', 'position': 1, 'name': '首页', 'item': `${SITE.domain}/` },
+      { '@type': 'ListItem', 'position': 2, 'name': '使用入门', 'item': `${SITE.domain}/start/` }
+    ]
+  }
+];
+---
+
+<BaseLayout title={`${pageTitle} | ${SITE.brandName}`} description={pageDescription} canonicalPath="/start/" jsonLd={jsonLd}>
+  <div class="container" style="padding-top: 3rem; padding-bottom: 5rem;">
+    <nav class="breadcrumb">
+      <a href="/">首页</a> <span class="sep">/</span>
+      <span>使用入门</span>
+    </nav>
+
+    <header style="margin-bottom: 3.5rem;">
+      <div class="section-tag">GETTING STARTED</div>
+      <h1 class="section-title">Gsou Cloud 新手使用入门指南</h1>
+      <p class="section-subtitle">
+        只需完成账号开通、订阅获取、客户端导入及系统代理开启四个步骤，即可迅速享受稳定的网络加速体验。
+      </p>
+    </header>
+
+    <div class="steps-wrapper">
+      <!-- Step 1 -->
+      <div class="step-item">
+        <div class="step-number font-mono">STEP 01</div>
+        <div class="step-content">
+          <h2>账号注册与登录</h2>
+          <p>
+            通过指定商业通道完成个人账号注册。请使用常用的电子邮箱地址以保证后续能够顺利接收订单确认与订阅重置通知。
+          </p>
+          <div style="margin-top: 1rem;">
+            <a
+              href={SITE.affUrl}
+              target={SITE.affTarget}
+              rel={SITE.affRel}
+              class="btn btn-primary"
+            >
+              立即注册账号
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="step-item">
+        <div class="step-number font-mono">STEP 02</div>
+        <div class="step-content">
+          <h2>挑选与开通订阅套餐</h2>
+          <p>
+            在控制面板的购买区中挑选适合您的套餐方案。依据个人流量使用习惯选择 SIMPLE (100GB)、LITE (150GB) 或 PRO (225GB)，并选择相应的月付、季付、半年付或年付周期。
+          </p>
+          <p>
+            在付款前请仔细核对订单计费明细，相关参考建议可参阅<a href="/library/before-payment/">《付款前应该了解什么？》</a>。
+          </p>
+        </div>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="step-item">
+        <div class="step-number font-mono">STEP 03</div>
+        <div class="step-content">
+          <h2>复制专属订阅链接</h2>
+          <p>
+            完成套餐开通后，进入用户中心仪表盘的“订阅服务”页面。点击“复制 Clash 订阅”、“一键导入 Shadowrocket”或“复制通用 Sub 链接”。
+          </p>
+          <p>
+            切记妥善保管您的个人订阅 URL，勿将其泄露给他人。相关维护要点可参阅<a href="/library/maintenance-calendar/">客户端配置维护日历</a>。
+          </p>
+        </div>
+      </div>
+
+      <!-- Step 4 -->
+      <div class="step-item">
+        <div class="step-number font-mono">STEP 04</div>
+        <div class="step-content">
+          <h2>客户端导入与代理开启</h2>
+          <p>
+            打开您对应的客户端软件（Windows/macOS 推荐 Clash Verge / Sing-box；iOS 推荐 Shadowrocket；Android 推荐 Clash / v2rayNG），粘帖订阅链接并点击“更新”。
+          </p>
+          <p>
+            选择延迟较低的节点（如香港、日本、新加坡等），在代理模式中选择“Rule (规则分流)”并开启系统代理即可完成配置。若遇到连接报错，请查阅<a href="/library/error-messages/">连接错误信息解答</a>。
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+.steps-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.step-item {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 2rem;
+  background-color: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  padding: 2.5rem;
+  border-radius: 4px;
+}
+
+.step-number {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-terracotta);
+  border-right: 2px solid var(--color-border);
+  padding-right: 1rem;
+}
+
+.step-content h2 {
+  font-size: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.step-content p {
+  font-size: 1rem;
+  color: var(--color-text-dark);
+  line-height: 1.7;
+  margin-bottom: 0.75rem;
+}
+
+.step-content a {
+  color: var(--color-terracotta);
+  text-decoration: underline;
+}
+
+@media (max-width: 640px) {
+  .step-item {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 1.5rem;
+  }
+  .step-number {
+    border-right: none;
+    border-bottom: 2px solid var(--color-border);
+    padding-bottom: 0.5rem;
+    padding-right: 0;
+  }
+}
+</style>

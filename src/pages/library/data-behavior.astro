@@ -1,0 +1,107 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { SITE } from '../../data/site';
+
+const articleMeta = {
+  title: '为什么相同流量额度的用户体验不同？Gsou Cloud流量使用行为分析',
+  description: '深入分析视频码率、应用后台同步、文件下载及多设备请求对 Gsou Cloud 套餐流量消耗速度的影响，掌握合理的流量规划方法。',
+  publishDate: '2026-10-09',
+  path: '/library/data-behavior/'
+};
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    'headline': articleMeta.title,
+    'description': articleMeta.description,
+    'datePublished': articleMeta.publishDate,
+    'mainEntityOfPage': {
+      '@type': 'WebPage',
+      '@id': `${SITE.domain}${articleMeta.path}`
+    },
+    'publisher': {
+      '@type': 'Organization',
+      'name': SITE.brandName
+    }
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    'itemListElement': [
+      { '@type': 'ListItem', 'position': 1, 'name': '首页', 'item': `${SITE.domain}/` },
+      { '@type': 'ListItem', 'position': 2, 'name': '知识文章', 'item': `${SITE.domain}/library/` },
+      { '@type': 'ListItem', 'position': 3, 'name': articleMeta.title, 'item': `${SITE.domain}${articleMeta.path}` }
+    ]
+  }
+];
+---
+
+<BaseLayout title={`${articleMeta.title} | ${SITE.brandName}`} description={articleMeta.description} canonicalPath={articleMeta.path} jsonLd={jsonLd}>
+  <div class="container" style="padding-top: 3rem; padding-bottom: 4rem;">
+    <nav class="breadcrumb">
+      <a href="/">首页</a> <span class="sep">/</span>
+      <a href="/library/">知识文章</a> <span class="sep">/</span>
+      <span>正文</span>
+    </nav>
+
+    <article class="article-reader">
+      <header class="article-header">
+        <div class="article-meta-top">
+          <span>流量管理</span>
+          <span>•</span>
+          <time>{articleMeta.publishDate}</time>
+        </div>
+        <h1 class="article-title">{articleMeta.title}</h1>
+        <p class="article-lead">
+          同样是持有每月 150GB 流量额度的用户，有人到月底依然充裕，有人却在月中就收到配额用尽的提醒。导致这一现象的核心原因在于每个人的网络使用行为差异。
+        </p>
+      </header>
+
+      <div class="article-body">
+        <h2>一、视频画质与码率：流量消耗的最大驱动力</h2>
+        <p>
+          在现代互联网应用中，在线视频播放占据了大部分用户的绝流量消耗。很多人忽略了视频分辨率提高时，数据传输量是以几何级数增长的：
+        </p>
+        <ul>
+          <li><strong>720P 高清：</strong>每小时大约消耗 0.8GB – 1.2GB 流量；</li>
+          <li><strong>1080P 全高清：</strong>每小时大约消耗 1.8GB – 3.0GB 流量；</li>
+          <li><strong>4K 超高清 60帧：</strong>每小时消耗可高达 7.0GB – 15.0GB 流量。</li>
+        </ul>
+        <p>
+          如果播放平台开启了“自动最高画质”或后台自动预加载，即使只是连续播放几个小时的 4K 视频，就可能轻松消耗数十 GB 流量。相比之下，单纯的网页文字浏览和社交软件消息收发，一个月可能仅消耗不到 10GB 流量。因此，在订购套餐前了解自己的主流视频观看习惯至关重要，详情可参考<a href="/library/before-payment/">付款前注意事项与套餐对比</a>。
+        </p>
+
+        <h2>二、应用后台自动同步与更新任务</h2>
+        <p>
+          除了主动播放视频外，“隐形流量”也是导致配额快速减少的重要原因。现代操作系统与应用程序（如 OneDrive、iCloud、Steam、应用商店自动升级及系统补丁包）会在后台静默下载更新。
+        </p>
+        <p>
+          当代理客户端处于“全局代理”模式时，这些本可以通过本地网络直连下载的大型补丁文件也会全额通过代理通道传输，从而快速吃掉订阅流量。学会使用 Clash 或 Shadowrocket 的“规则分流”模式，将常规软件更新排除在代理路由之外，是节省流量的明智手段。相关保养提示可参阅<a href="/library/maintenance-calendar/">客户端配置维护日历</a>。
+        </p>
+
+        <h2>三、多设备接入带来的叠加效应</h2>
+        <p>
+          当同一个订阅账户在手机、电脑、平板及路由器等多台设备上同时使用时，流量消耗呈现出叠加状态。
+        </p>
+        <p>
+          例如，电脑端后台在下载软件安装包，手机端同时在刷新高码率短视频，平板端还在进行网盘文件同步。多设备并发使得流量消耗速率翻倍。了解已登录设备与并发连接限制的区别，请查阅<a href="/library/device-limits/">多设备使用核实条件</a>。
+        </p>
+
+        <h2>四、合理规划与流量管理建议</h2>
+        <p>
+          为了让订阅流量得到更合理的使用，建议采取以下几点防护措施：
+        </p>
+        <ol>
+          <li>在移动设备上将视频播放器的默认画质设定为 1080P 或“依据网络自动调整”；</li>
+          <li>关闭大型云盘与应用商店在代理连接状态下的自动大文件同步；</li>
+          <li>在客户端中开启规则分流，避免国内网站或本地 P2P 下载占用代理配额；</li>
+          <li>定期在官网后台或客户端面板中核查流量已用比例。</li>
+        </ol>
+        <p>
+          通过科学的使用习惯，即便是 100GB 的 SIMPLE 套餐也能满足日常工作与学习需求；而对于追求无忧体验的用户，包含 225GB 大流量的 PRO 套餐则是更具弹性的选择。如需升级您的流量档位，请点击<a href={SITE.affUrl} target={SITE.affTarget} rel={SITE.affRel}>查看 Gsou Cloud 购买方案</a>。
+        </p>
+      </div>
+    </article>
+  </div>
+</BaseLayout>

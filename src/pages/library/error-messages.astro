@@ -1,0 +1,113 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { SITE } from '../../data/site';
+
+const articleMeta = {
+  title: 'Gsou Cloud用户如何阅读连接错误信息？常见提示和处理原则',
+  description: '学会解读 Clash、Shadowrocket 等客户端出现的连接超时、DNS 解析失败、SSL 证书错误及订阅更新失败等常见日志提示与排查逻辑。',
+  publishDate: '2026-10-09',
+  path: '/library/error-messages/'
+};
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    'headline': articleMeta.title,
+    'description': articleMeta.description,
+    'datePublished': articleMeta.publishDate,
+    'mainEntityOfPage': {
+      '@type': 'WebPage',
+      '@id': `${SITE.domain}${articleMeta.path}`
+    },
+    'publisher': {
+      '@type': 'Organization',
+      'name': SITE.brandName
+    }
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    'itemListElement': [
+      { '@type': 'ListItem', 'position': 1, 'name': '首页', 'item': `${SITE.domain}/` },
+      { '@type': 'ListItem', 'position': 2, 'name': '知识文章', 'item': `${SITE.domain}/library/` },
+      { '@type': 'ListItem', 'position': 3, 'name': articleMeta.title, 'item': `${SITE.domain}${articleMeta.path}` }
+    ]
+  }
+];
+---
+
+<BaseLayout title={`${articleMeta.title} | ${SITE.brandName}`} description={articleMeta.description} canonicalPath={articleMeta.path} jsonLd={jsonLd}>
+  <div class="container" style="padding-top: 3rem; padding-bottom: 4rem;">
+    <nav class="breadcrumb">
+      <a href="/">首页</a> <span class="sep">/</span>
+      <a href="/library/">知识文章</a> <span class="sep">/</span>
+      <span>正文</span>
+    </nav>
+
+    <article class="article-reader">
+      <header class="article-header">
+        <div class="article-meta-top">
+          <span>故障排查</span>
+          <span>•</span>
+          <time>{articleMeta.publishDate}</time>
+        </div>
+        <h1 class="article-title">{articleMeta.title}</h1>
+        <p class="article-lead">
+          在使用代理客户端的过程中，难免会遇到连接中断或无法刷新的情况。看懂客户端控制台输出的日志错误信息，是迅速定位并解决问题的第一步。
+        </p>
+      </header>
+
+      <div class="article-body">
+        <h2>一、常见错误一：Timeout / Dial error (连接超时)</h2>
+        <p>
+          当日志中出现“Timeout”、“Connection Refused”或“Dial tcp error”时，表示客户端在向目标中转节点发起 TCP 握手时未能在限定时间内收到响应。
+        </p>
+        <p>
+          <strong>可能原因与解决原则：</strong>
+        </p>
+        <ol>
+          <li>本地网络完全断开：请先检查手机或电脑是否已正常连接 Wi-Fi 或蜂窝数据；</li>
+          <li>本地防火墙或安全软件拦截：核实 Windows Defender 或第三方杀毒软件是否误杀客户端网络代理服务；</li>
+          <li>特定节点临时维护：尝试在节点列表中切换至其他备用线路。欲了解网络连接的完整路径逻辑，可参考<a href="/library/route-journey/">网络连接路由路径解析</a>。</li>
+        </ol>
+
+        <h2>二、常见错误二：DNS Resolve Failure (域名解析失败)</h2>
+        <p>
+          日志显示“can't resolve domain”或“DNS query timeout”表明客户端无法将域名转换为对应的 IP 地址。
+        </p>
+        <p>
+          这通常是由于本地设置的 DNS 服务器响应过慢，或者系统代理拦截了 DNS 流量所致。建议在客户端设置中将本地 DNS 切换为公共 DNS（如 223.5.5.5 或 119.29.29.29），并在代理规则中开启远程 DNS fallback 解析机制。关于 DNS 在完整访问链条中的定位，可以查阅<a href="/faq/">常见问题 FAQ</a> 页面。
+        </p>
+
+        <h2>三、常见错误三：Handshake / Certificate Error (证书与握手错误)</h2>
+        <p>
+          如果在日志中频繁看到“x509: certificate has expired”、“tls handshake failed”或“invalid time range”等提示，核心问题大多集中在<strong>系统时间校验</strong>上。
+        </p>
+        <p>
+          由于现代 TLS 加密建立在精准的时间戳验证之上，只要本地设备的系统时间与国际标准 UTC 时间偏差超过 2-3 分钟，证书校验就会立刻被中止。解决办法非常简单：在操作系统设置中重新勾选“自动同步时间”即可。关于系统时间校准的详细周期，请参阅<a href="/library/maintenance-calendar/">客户端配置维护日历</a>。
+        </p>
+
+        <h2>四、常见错误四：Subscription Fetch Failed (订阅访问失败)</h2>
+        <p>
+          当点击“更新订阅”时提示 HTTP 500、403 权限拒绝或无法连接服务器，通常包含以下两种情况：
+        </p>
+        <ul>
+          <li><strong>账户配额或到期因素：</strong>您的套餐流量可能已耗尽，或者订阅周期已经届满；</li>
+          <li><strong>订阅 URL 被误拦截：</strong>更新订阅时的访问请求被本地代理规则错误拦截，尝试在更新时临时关闭系统代理后再操作。</li>
+        </ul>
+        <p>
+          若确认为流量或到期原因，可在<a href="/plans/">套餐选择页面</a>重新挑选适合的订阅计划，并按需完成续费开通。
+        </p>
+
+        <h2>五、如何正确导出日志与排查原则</h2>
+        <p>
+          遇到无法自助排查的问题时，请遵循以下规范提取日志：在客户端设置中将日志等级调整为“Debug”或“Info”，复制发生错误时的前十行与后十行上下文记录。切记在分享日志前抹去个人订阅密钥与敏感 IP 信息。
+        </p>
+        <p>
+          通过理性的分层排查法，90% 以上的连接障碍都能在数分钟内得到解决。如需访问官方帮助及在线收银通道，请选择唯一指定<a href={SITE.affUrl} target={SITE.affTarget} rel={SITE.affRel}>Gsou Cloud 服务开通入口</a>。
+        </p>
+      </div>
+    </article>
+  </div>
+</BaseLayout>

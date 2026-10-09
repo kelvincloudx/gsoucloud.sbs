@@ -1,0 +1,146 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { SITE } from '../../data/site';
+
+const articleMeta = {
+  title: 'Gsou Cloud付款前应该了解什么？套餐金额与流量权益阅读方法',
+  description: '在开通 Gsou Cloud 订阅前，详细了解 SIMPLE、LITE、PRO 套餐的月付、季付、半年付与年付价格换算，掌握月度流量配额重置与结算规则。',
+  publishDate: '2026-10-09',
+  path: '/library/before-payment/'
+};
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    'headline': articleMeta.title,
+    'description': articleMeta.description,
+    'datePublished': articleMeta.publishDate,
+    'mainEntityOfPage': {
+      '@type': 'WebPage',
+      '@id': `${SITE.domain}${articleMeta.path}`
+    },
+    'publisher': {
+      '@type': 'Organization',
+      'name': SITE.brandName
+    }
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    'itemListElement': [
+      { '@type': 'ListItem', 'position': 1, 'name': '首页', 'item': `${SITE.domain}/` },
+      { '@type': 'ListItem', 'position': 2, 'name': '知识文章', 'item': `${SITE.domain}/library/` },
+      { '@type': 'ListItem', 'position': 3, 'name': articleMeta.title, 'item': `${SITE.domain}${articleMeta.path}` }
+    ]
+  }
+];
+---
+
+<BaseLayout title={`${articleMeta.title} | ${SITE.brandName}`} description={articleMeta.description} canonicalPath={articleMeta.path} jsonLd={jsonLd}>
+  <div class="container" style="padding-top: 3rem; padding-bottom: 4rem;">
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb">
+      <a href="/">首页</a> <span class="sep">/</span>
+      <a href="/library/">知识文章</a> <span class="sep">/</span>
+      <span>正文</span>
+    </nav>
+
+    <article class="article-reader">
+      <header class="article-header">
+        <div class="article-meta-top">
+          <span>订阅指南</span>
+          <span>•</span>
+          <time>{articleMeta.publishDate}</time>
+        </div>
+        <h1 class="article-title">{articleMeta.title}</h1>
+        <p class="article-lead">
+          选择适合自己的网络订阅套餐不仅关乎每月预算，更直接决定了日常网络使用的顺畅度。本文将为你拆解 Gsou Cloud 各档套餐的价格结构、付款周期换算规则以及下单结算前必须核对的要点。
+        </p>
+      </header>
+
+      <div class="article-body">
+        <h2>一、Gsou Cloud 套餐体系与价格矩阵</h2>
+        <p>
+          在选择网络订阅服务时，首先需要理解不同套餐在流量配额与结算周期上的设计逻辑。Gsou Cloud 提供了三款公开参考套餐，分别面向轻度浏览、标准进阶与高强度多设备使用需求。
+        </p>
+        <p>
+          为了帮助用户清晰地进行对比，以下列出了 SIMPLE、LITE 和 PRO 三档套餐在四个付款周期（月付、季付、半年付、年付）下的真实计费对应关系：
+        </p>
+        <table>
+          <thead>
+            <tr>
+              <th>套餐名称</th>
+              <th>月度流量</th>
+              <th>月付</th>
+              <th>季付</th>
+              <th>半年付</th>
+              <th>年付</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>SIMPLE 套餐</strong></td>
+              <td>100GB / 月</td>
+              <td>¥25</td>
+              <td>¥60 (折合¥20.0/月)</td>
+              <td>¥105 (折合¥17.5/月)</td>
+              <td>¥180 (折合¥15.0/月)</td>
+            </tr>
+            <tr>
+              <td><strong>LITE 套餐</strong></td>
+              <td>150GB / 月</td>
+              <td>¥30</td>
+              <td>¥72 (折合¥24.0/月)</td>
+              <td>¥126 (折合¥21.0/月)</td>
+              <td>¥216 (折合¥18.0/月)</td>
+            </tr>
+            <tr>
+              <td><strong>PRO 套餐</strong></td>
+              <td>225GB / 月</td>
+              <td>¥35</td>
+              <td>¥84 (折合¥28.0/月)</td>
+              <td>¥147 (折合¥24.5/月)</td>
+              <td>¥252 (折合¥21.0/月)</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>
+          从上表中可以看出，随着付款周期的延长，单位月份的折合平均成本逐渐降低。例如，SIMPLE 套餐从月付的 ¥25/月 降低至年付的折合 ¥15.0/月。用户可以根据自己的长期使用规划与预算自由选择。若想查看具体场景推荐，可以参阅<a href="/plans/">完整套餐价格矩阵</a>进行细致比较。
+        </p>
+
+        <h2>二、月度流量配额与账单周期的核心区别</h2>
+        <p>
+          许多初次接触订阅服务的用户容易产生一个常见误区：认为选择年付或季付后，套餐所标明的流量会一次性发放给整年或整季。实际上，<strong>月度流量额度与付款结算周期是两个独立的概念</strong>。
+        </p>
+        <p>
+          无论是按月支付还是按年支付，SIMPLE 套餐的 100GB、LITE 套餐的 150GB 以及 PRO 套餐的 225GB 流量均为按月配额重置。也就是说，每一个账单重置日开始时，您的可用流量将重新恢复为初始额度，未用完的当月流量通常不进行跨月累计。理解这一机制有助于避免月初盲目大流量下载导致月中配额耗尽的问题。具体的流量消耗行为特征可以参考<a href="/library/data-behavior/">流量使用行为分析</a>一文。
+        </p>
+
+        <h2>三、付款前必须核对的四大关键事项</h2>
+        <p>
+          在跳转至收银页面前，建议用户完成以下四项核对，以保证购买体验符合预期：
+        </p>
+        <ol>
+          <li>
+            <strong>确认应付款项总额：</strong>在收银台结账时，请仔细核对最终商品名称与金额是否与您选定的周期完全一致。
+          </li>
+          <li>
+            <strong>评估个人流量需求：</strong>如果日常主要用于文字网页查阅，100GB 的 SIMPLE 套餐完全足够；若频繁观看 4K 高清视频或进行大文件传输，建议优先考虑 150GB 或 225GB 的进阶套餐。
+          </li>
+          <li>
+            <strong>了解多设备限制条件：</strong>核实自身需要同时在线连接的终端数量，防止因设备并发过多影响连接稳定性，详情可参阅<a href="/library/device-limits/">多设备使用核实条件</a>。
+          </li>
+          <li>
+            <strong>核对节点与协议兼容性：</strong>确认您计划使用的终端设备与客户端软件（如 Clash、Shadowrocket 等）支持当前节点提供的加密协议。
+          </li>
+        </ol>
+
+        <h2>四、结语与购买建议</h2>
+        <p>
+          理性选择网络订阅服务的关键在于匹配真实的用量需求与合理的付款周期。通过事先了解各周期的折合单价与流量重置机制，您可以更具针对性地开通服务。如需开通或变更当前套餐，请通过官方商业通道<a href={SITE.affUrl} target={SITE.affTarget} rel={SITE.affRel}>前往购买方案收银台</a>进行办理。
+        </p>
+      </div>
+    </article>
+  </div>
+</BaseLayout>

@@ -1,0 +1,179 @@
+---
+// UserExperienceSection component (Part 10: 口碑与使用体验版块)
+---
+
+<section class="experience-section">
+  <div class="container">
+    <div class="exp-header">
+      <div class="section-tag">USER FOCUS & EXPERIENCE</div>
+      <h2 class="section-title">Gsou Cloud 用户关注的使用体验</h2>
+      <p class="section-subtitle">
+        从日常浏览到多设备使用，了解影响网络体验的几个重要因素。
+      </p>
+    </div>
+
+    <div class="exp-grid">
+      <!-- Card 1 -->
+      <div class="exp-card">
+        <div class="card-num font-mono">01 / BROWSE</div>
+        <h3>日常浏览体验</h3>
+        <p class="card-desc">
+          关注网页首字响应速度、域名 DNS 解析时长、节点初始 Ping 延迟以及在晚高峰时段国际出口主干网的抗拥堵能力。
+        </p>
+        <ul class="exp-highlights">
+          <li>域名快速解析与 TLS 握手优化</li>
+          <li>网页多元素加载并发流畅度</li>
+          <li>高峰期路由抖动与丢包率观察</li>
+        </ul>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="exp-card">
+        <div class="card-num font-mono">02 / STREAMING</div>
+        <h3>视频与大流量使用</h3>
+        <p class="card-desc">
+          关注每月流量配额（100GB–225GB）是否满足超清视频播放需求，大文件下载时的持续带宽速率以及缓存加载稳定性。
+        </p>
+        <ul class="exp-highlights">
+          <li>1080P / 4K 视频码率与配额匹配</li>
+          <li>长视频缓存加载防中途卡顿</li>
+          <li>大容量规则流量消耗合理化</li>
+        </ul>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="exp-card">
+        <div class="card-num font-mono">03 / CONFIGURATION</div>
+        <h3>客户端配置体验</h3>
+        <p class="card-desc">
+          关注订阅链接在 Clash、Shadowrocket 等客户端中的一键导入效率、自动更新成功率以及规则代理模式的精准分流。
+        </p>
+        <ul class="exp-highlights">
+          <li>主流客户端订阅格式自动化兼容</li>
+          <li>节点 IP 与分流规则定期后台同步</li>
+          <li>全局与规则代理模式快速切换</li>
+        </ul>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="exp-card">
+        <div class="card-num font-mono">04 / MULTI-DEVICE</div>
+        <h3>多设备管理体验</h3>
+        <p class="card-desc">
+          关注桌面电脑、智能手机与平板电脑同时连接时的带宽分配、Wi-Fi 与蜂窝数据切换时的连通性及订阅密钥安全。
+        </p>
+        <ul class="exp-highlights">
+          <li>多终端在线连接与设备配额划分</li>
+          <li>移动网络切换时的自动断开重连</li>
+          <li>订阅配置私密保护与安全管理</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+.experience-section {
+  background-color: var(--color-graphite);
+  color: var(--color-ivory);
+  padding: 5rem 0;
+  margin: 4rem 0;
+  border-top: 1px solid var(--color-border-dark);
+  border-bottom: 1px solid var(--color-border-dark);
+}
+
+.exp-header {
+  text-align: center;
+  margin-bottom: 3.5rem;
+}
+
+.exp-header .section-tag {
+  color: var(--color-gold);
+  justify-content: center;
+}
+
+.exp-header .section-tag::before {
+  background-color: var(--color-gold);
+}
+
+.exp-header .section-title {
+  color: #FFFFFF;
+}
+
+.exp-header .section-subtitle {
+  color: #BAC9BD;
+  margin: 0 auto;
+}
+
+.exp-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+}
+
+.exp-card {
+  background-color: #27242C;
+  border: 1px solid #423E4A;
+  padding: 2rem 1.5rem;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  transition: var(--transition);
+}
+
+.exp-card:hover {
+  border-color: var(--color-gold);
+  transform: translateY(-2px);
+}
+
+.card-num {
+  font-size: 0.8rem;
+  color: var(--color-gold);
+  margin-bottom: 1rem;
+  letter-spacing: 0.05em;
+}
+
+.exp-card h3 {
+  color: #FFFFFF;
+  font-size: 1.25rem;
+  margin-bottom: 0.75rem;
+}
+
+.card-desc {
+  font-size: 0.875rem;
+  color: #D6D2DC;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  flex-grow: 1;
+}
+
+.exp-highlights {
+  list-style: none;
+  border-top: 1px dashed #423E4A;
+  padding-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-size: 0.8125rem;
+  color: var(--color-sage);
+}
+
+.exp-highlights li::before {
+  content: "• ";
+  color: var(--color-terracotta);
+  font-weight: bold;
+}
+
+@media (max-width: 1024px) {
+  .exp-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .exp-grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>

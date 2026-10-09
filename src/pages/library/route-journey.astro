@@ -1,0 +1,112 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { SITE } from '../../data/site';
+
+const articleMeta = {
+  title: 'Gsou Cloud网络连接中的路由路径是什么？从设备到目标网站的过程',
+  description: '探索 Gsou Cloud 数据传输的完整路由路径，从本地客户端、DNS 解析、运营商公网隧道中转到 IPLC 专线及目标服务器的全过程。',
+  publishDate: '2026-10-09',
+  path: '/library/route-journey/'
+};
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    'headline': articleMeta.title,
+    'description': articleMeta.description,
+    'datePublished': articleMeta.publishDate,
+    'mainEntityOfPage': {
+      '@type': 'WebPage',
+      '@id': `${SITE.domain}${articleMeta.path}`
+    },
+    'publisher': {
+      '@type': 'Organization',
+      'name': SITE.brandName
+    }
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    'itemListElement': [
+      { '@type': 'ListItem', 'position': 1, 'name': '首页', 'item': `${SITE.domain}/` },
+      { '@type': 'ListItem', 'position': 2, 'name': '知识文章', 'item': `${SITE.domain}/library/` },
+      { '@type': 'ListItem', 'position': 3, 'name': articleMeta.title, 'item': `${SITE.domain}${articleMeta.path}` }
+    ]
+  }
+];
+---
+
+<BaseLayout title={`${articleMeta.title} | ${SITE.brandName}`} description={articleMeta.description} canonicalPath={articleMeta.path} jsonLd={jsonLd}>
+  <div class="container" style="padding-top: 3rem; padding-bottom: 4rem;">
+    <nav class="breadcrumb">
+      <a href="/">首页</a> <span class="sep">/</span>
+      <a href="/library/">知识文章</a> <span class="sep">/</span>
+      <span>正文</span>
+    </nav>
+
+    <article class="article-reader">
+      <header class="article-header">
+        <div class="article-meta-top">
+          <span>网络技术</span>
+          <span>•</span>
+          <time>{articleMeta.publishDate}</time>
+        </div>
+        <h1 class="article-title">{articleMeta.title}</h1>
+        <p class="article-lead">
+          当你在浏览器中输入一个网站地址并按下回车时，数据包在短短几十毫秒内跨越了数千公里。了解网络连接的路由路径，能帮助用户理清延迟、带宽与连接稳定性的物理本质。
+        </p>
+      </header>
+
+      <div class="article-body">
+        <h2>一、网络连接的起点：本地设备与 DNS 解析</h2>
+        <p>
+          在任何数据传输开启之前，本地终端（如手机或电脑）上的客户端软件首先需要确定目标服务器的逻辑地址。当发起网络访问时，客户端将域名发送给配置的 DNS 服务器进行解析。
+        </p>
+        <p>
+          如果在这一步出现了 DNS 污染或解析延迟，即便中转通道性能再高，用户也会感受到页面打不开或响应缓慢的情况。通过优化本地 DNS 配置和使用加密 DNS 技术，能够显著缩短这一阶段的等待时间。关于 DNS 与连接报错的关联，可以在<a href="/library/error-messages/">连接错误信息阅读指南</a>中深入探讨。
+        </p>
+
+        <h2>二、第一跳：本地运营商网络与入口节点</h2>
+        <p>
+          完成域名解析后，客户端会将原始请求数据按照指定协议（如 Shadowsocks、V2ray 等）进行加密封装，并将其发送至指定的入口中转节点。
+        </p>
+        <p>
+          这一阶段的物理路径由用户本地的电信、联通或移动宽带决定。本地网络质量（例如 Wi-Fi 信号强弱、光猫路由性能及家庭网关状态）会直接影响第一跳的延迟与丢包。如果在这一步发生抖动，数据包的初始传输就会受到阻碍。
+        </p>
+
+        <h2>三、核心中转层：公网隧道与 IPLC 专线路由</h2>
+        <p>
+          当加密数据包到达入口中转服务器后，系统需要将其高效地转发至境外出口节点。现代代理网络架构通常采用以下两种中转技术路径：
+        </p>
+        <ul>
+          <li>
+            <strong>公网隧道中转：</strong>利用在不同国内机房与海外机房之间搭建的加密公网通道进行数据二次封装转发。该方式性价比高，但在公网国际出口高峰拥堵时可能会受到一定波及。
+          </li>
+          <li>
+            <strong>IPLC 专线中转：</strong>通过预先租用的点对点内网专线（如沪日、粤港等）传输数据。由于数据传输完全在封闭的内网管道中运行，不经过公网防火墙与国际出口拥堵节点，因此具备极低的延迟抖动与极高的稳定性。
+          </li>
+        </ul>
+        <p>
+          Gsou Cloud 的网络设计融合了优质公网隧道与专线路由，旨在为用户提供均衡、可靠的跨境传输能力。欲了解各套餐对应的接入权限，请参阅<a href="/plans/">套餐规格表</a>。
+        </p>
+
+        <h2>四、出口节点与目标网站交互</h2>
+        <p>
+          数据包通过专线或隧道到达海外出口节点（如香港、日本、台湾、新加坡、美国等）后，出口服务器将其还原解密为标准网络请求，再与目标网站服务器建立连接。
+        </p>
+        <p>
+          目标服务器处理请求后返回响应数据，响应数据顺着相反的路由路径返回至用户设备。整条链路的整体延迟是由“本地到入口”、“入口到出口”以及“出口到目标”三段延迟叠加而成的。
+        </p>
+
+        <h2>五、高峰期影响与路由知识的实际价值</h2>
+        <p>
+          在夜间 20:00 至 23:00 的网络高峰时段，全球国际出口骨干网的流量会急剧上升。了解上述路由路径后，当遇到网络变慢时，用户就能科学地判断问题所在：是本地 Wi-Fi 干扰？还是个别目标网站服务器过载？亦或是特定入口线路受到了公网拥堵影响？
+        </p>
+        <p>
+          若想建立更完善的客观评测标准，推荐阅读<a href="/library/experience-evaluation/">如何客观判断使用体验</a>。如需即刻体验稳定路由服务，欢迎<a href={SITE.affUrl} target={SITE.affTarget} rel={SITE.affRel}>开通 Gsou Cloud 订阅服务</a>。
+        </p>
+      </div>
+    </article>
+  </div>
+</BaseLayout>

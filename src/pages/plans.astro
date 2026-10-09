@@ -1,0 +1,154 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PlanMatrix from '../components/PlanMatrix.astro';
+import { HISTORICAL_PLANS } from '../data/plans';
+import { SITE } from '../data/site';
+
+const pageTitle = 'Gsou Cloud 套餐价格与订阅方案矩阵';
+const pageDescription = '完整查看 Gsou Cloud 的 SIMPLE、LITE、PRO 套餐在月付、季付、半年付及年付下的 12 项公开参考价格与详细流量权益。';
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    'itemListElement': [
+      { '@type': 'ListItem', 'position': 1, 'name': '首页', 'item': `${SITE.domain}/` },
+      { '@type': 'ListItem', 'position': 2, 'name': '订阅套餐', 'item': `${SITE.domain}/plans/` }
+    ]
+  }
+];
+---
+
+<BaseLayout title={`${pageTitle} | ${SITE.brandName}`} description={pageDescription} canonicalPath="/plans/" jsonLd={jsonLd}>
+  <div class="container" style="padding-top: 3rem; padding-bottom: 5rem;">
+    <nav class="breadcrumb">
+      <a href="/">首页</a> <span class="sep">/</span>
+      <span>订阅套餐</span>
+    </nav>
+
+    <header style="margin-bottom: 3rem;">
+      <div class="section-tag">ARCHIVE PRICING MATRIX</div>
+      <h1 class="section-title">Gsou Cloud 套餐价格与订阅方案</h1>
+      <p class="section-subtitle">
+        提供 SIMPLE (100GB)、LITE (150GB) 及 PRO (225GB) 三款主力套餐。您可以通过点击付款周期按钮，自由切换查看月付、季付、半年付和年付对应的具体应付金额。
+      </p>
+    </header>
+
+    <!-- Main Plan Matrix -->
+    <PlanMatrix />
+
+    <!-- Historical Reference Section -->
+    <section class="historical-section">
+      <div class="section-tag">HISTORICAL DATA REFERENCE</div>
+      <h3>公开历史参考记录（PRO ULTRA 旗舰套餐）</h3>
+      <p class="historical-intro">
+        说明：以下为公开历史资料中记录的特定高容量套餐项。因目前收银后台是否持续开放实时销售尚无统一核实结果，故此项不作为前台默认推荐售卖商品，仅供参考记录。
+      </p>
+
+      {HISTORICAL_PLANS.map(item => (
+        <div class="historical-card">
+          <div class="h-name">{item.name}</div>
+          <div class="h-details font-mono">
+            <span>售价：{item.priceText}</span> | <span>流量：{item.bandwidthText}</span>
+          </div>
+          <p class="h-note">{item.note}</p>
+        </div>
+      ))}
+    </section>
+
+    <!-- Cycle Notes -->
+    <section class="notes-section">
+      <h3>付款周期与订购核对须知</h3>
+      <ul class="notes-list">
+        <li><strong>金额透明化：</strong>矩阵表中所列出的价格均为结算参考应付金额，不存在隐含附加费用。</li>
+        <li><strong>流量配额按月重置：</strong>季付、半年付或年付订单的流量按自然月或固定 30 天进行额度重置，当月未用完流量不结转至次月。</li>
+        <li><strong>收银界面二次核对：</strong>点击“购买套餐”跳转至商业结账界面时，请确认所选周期与实际订单明细完全一致。更多规则请参考<a href="/library/before-payment/">付款前注意事项</a>。</li>
+      </ul>
+
+      <div style="margin-top: 2rem;">
+        <a
+          href={SITE.affUrl}
+          target={SITE.affTarget}
+          rel={SITE.affRel}
+          class="btn btn-primary"
+        >
+          前往开通选购方案
+        </a>
+      </div>
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+.historical-section {
+  margin-top: 4rem;
+  background-color: #FAF6ED;
+  border: 1px dashed var(--color-border);
+  padding: 2rem;
+  border-radius: 4px;
+}
+
+.historical-section h3 {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+  color: var(--color-graphite);
+}
+
+.historical-intro {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  margin-bottom: 1.5rem;
+}
+
+.historical-card {
+  background-color: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  padding: 1.25rem 1.5rem;
+  border-radius: 2px;
+}
+
+.h-name {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--color-graphite);
+}
+
+.h-details {
+  font-size: 0.9rem;
+  color: var(--color-terracotta);
+  margin: 0.5rem 0;
+  font-weight: 600;
+}
+
+.h-note {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+}
+
+.notes-section {
+  margin-top: 3.5rem;
+  background-color: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  padding: 2.5rem;
+}
+
+.notes-section h3 {
+  font-size: 1.4rem;
+  margin-bottom: 1.25rem;
+}
+
+.notes-list {
+  padding-left: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  font-size: 0.975rem;
+  line-height: 1.6;
+}
+
+.notes-list a {
+  color: var(--color-terracotta);
+  text-decoration: underline;
+}
+</style>

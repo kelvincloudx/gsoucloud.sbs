@@ -1,0 +1,103 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { SITE } from '../../data/site';
+
+const articleMeta = {
+  title: 'Gsou Cloud客户端配置维护日历：哪些项目需要定期检查？',
+  description: '建立系统化的 Gsou Cloud 客户端定期维护习惯，涵盖更新订阅、检查软件版本、校准系统时间及清理分流规则，确保网络长期稳定。',
+  publishDate: '2026-10-09',
+  path: '/library/maintenance-calendar/'
+};
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    'headline': articleMeta.title,
+    'description': articleMeta.description,
+    'datePublished': articleMeta.publishDate,
+    'mainEntityOfPage': {
+      '@type': 'WebPage',
+      '@id': `${SITE.domain}${articleMeta.path}`
+    },
+    'publisher': {
+      '@type': 'Organization',
+      'name': SITE.brandName
+    }
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    'itemListElement': [
+      { '@type': 'ListItem', 'position': 1, 'name': '首页', 'item': `${SITE.domain}/` },
+      { '@type': 'ListItem', 'position': 2, 'name': '知识文章', 'item': `${SITE.domain}/library/` },
+      { '@type': 'ListItem', 'position': 3, 'name': articleMeta.title, 'item': `${SITE.domain}${articleMeta.path}` }
+    ]
+  }
+];
+---
+
+<BaseLayout title={`${articleMeta.title} | ${SITE.brandName}`} description={articleMeta.description} canonicalPath={articleMeta.path} jsonLd={jsonLd}>
+  <div class="container" style="padding-top: 3rem; padding-bottom: 4rem;">
+    <nav class="breadcrumb">
+      <a href="/">首页</a> <span class="sep">/</span>
+      <a href="/library/">知识文章</a> <span class="sep">/</span>
+      <span>正文</span>
+    </nav>
+
+    <article class="article-reader">
+      <header class="article-header">
+        <div class="article-meta-top">
+          <span>客户端维护</span>
+          <span>•</span>
+          <time>{articleMeta.publishDate}</time>
+        </div>
+        <h1 class="article-title">{articleMeta.title}</h1>
+        <p class="article-lead">
+          许多网络连接问题并非源自服务端故障，而是因为客户端软件长期未进行维护与配置更新。建立一份科学的配置检查日历，能够大幅降低使用过程中的突发异常，保障日常跨网工作的顺畅推进。
+        </p>
+      </header>
+
+      <div class="article-body">
+        <h2>一、每周例行检查项：手动或自动更新订阅节点</h2>
+        <p>
+          代理服务端的节点 IP 地址、中转加密参数或线路通道可能会根据网络监控情况进行动态调整与升级优化。后端维护团队会定期剔除不稳定节点并上线高性能线路。
+        </p>
+        <p>
+          如果客户端保有的配置文件长时间没有同步更新，可能会导致部分旧节点出现延迟无限放大、显示为 -1ms 或直接提示握手超时。建议用户在 Clash Verge、Sing-box 或 Shadowrocket 等软件中设置“每日自动更新订阅”，或至少在每周固定时间手动点击一次“更新订阅”。更多具体操作步骤可在<a href="/clients/">客户端使用指南页面</a>中深入了解。
+        </p>
+
+        <h2>二、每月重点检查项：校准系统时间与软件版本</h2>
+        <p>
+          现代加密传输协议（包括 V2ray vmess、Vless 及 Shadowsocks 等）需要客户端与服务端进行高精度的时间戳比对鉴权。
+        </p>
+        <p>
+          如果您的电脑或手机因为电池耗尽、时区设置错误或操作系统 NTP 同步失败，导致系统时间偏离标准时间超过 2 分钟，客户端握手请求将被服务端直接拒绝。每月核查一次系统时间自动同步开关，能预防大多数神秘的“连不上”故障。同时，保持客户端软件升级至最新稳定版，能获得更好的内核性能与安全补丁。若遇到相关报错，请参考<a href="/library/error-messages/">连接错误信息处理原则</a>进行排查。
+        </p>
+
+        <h2>三、每季度深入维护项：规则文件升级与分流优化</h2>
+        <p>
+          随着互联网域名的频繁变更与新服务的推出，规则分流库（如 GEOIP 和 GEOSITE 规则）也需要定期升级。
+        </p>
+        <p>
+          过旧的分流规则可能导致部分新推出的海外网站被误判为本地直连，或者将国内正常网站误走代理通道，既影响访问速度又无谓消耗订阅流量。每季度在客户端设置中更新一次规则数据库，能够保障分流的精准性并节省无谓的流量消耗，相关的流量行为规律可以阅读<a href="/library/data-behavior/">流量使用行为分析</a>。
+        </p>
+
+        <h2>四、订阅链接的隐私保护与密钥安全</h2>
+        <p>
+          订阅 URL 中包含了您个人的专属鉴权密钥（Token）。请务必像对待账号密码一样保护您的订阅链接：
+        </p>
+        <ul>
+          <li>切勿将包含订阅 URL 的截图或文本发布到公开论坛、社交媒体或公共群聊中；</li>
+          <li>避免在公共或未经信任的网吧电脑上导入个人订阅；</li>
+          <li>若怀疑订阅链接泄露，应第一时间登录后台重置订阅密钥并在客户端中更新配置。</li>
+        </ul>
+
+        <h2>五、总结：养成良好的日常维护习惯</h2>
+        <p>
+          通过将上述“周更新、月校准、季维护”引入日常使用习惯，您不仅能最大化发挥 Gsou Cloud 节点的连接性能，还能确保网络环境的安全稳定。需要获取最新的官方订阅配置？请直接访问<a href={SITE.affUrl} target={SITE.affTarget} rel={SITE.affRel}>Gsou Cloud 用户专属通道</a>。
+        </p>
+      </div>
+    </article>
+  </div>
+</BaseLayout>

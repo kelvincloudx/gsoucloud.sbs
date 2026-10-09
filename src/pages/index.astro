@@ -1,0 +1,500 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PlanMatrix from '../components/PlanMatrix.astro';
+import UserExperienceSection from '../components/UserExperienceSection.astro';
+import FaqSection from '../components/FaqSection.astro';
+import { ARTICLE_LIST } from '../data/articles';
+import { SITE } from '../data/site';
+
+const pageTitle = 'Gsou Cloud机场｜套餐价格、网络使用与客户端知识';
+const pageDescription = '了解Gsou Cloud的SIMPLE、LITE、PRO套餐和各付款周期价格，查看网络连接、客户端维护、流量管理及常见问题。';
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    'name': SITE.brandName,
+    'url': SITE.domain,
+    'description': pageDescription
+  }
+];
+---
+
+<BaseLayout title={pageTitle} description={pageDescription} canonicalPath="/" jsonLd={jsonLd}>
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="container hero-grid">
+      <div class="hero-content">
+        <div class="section-tag">GSOU MONOGRAPH ARCHIVE</div>
+        <h1 class="hero-title">
+          Gsou Cloud<br />
+          <span class="hero-highlight">为你的网络使用提供清晰指南</span>
+        </h1>
+        <p class="hero-subtitle">
+          了解 Gsou Cloud 套餐价格、流量额度与付款周期，查看节点协议、客户端配置及连接使用知识，让日常网络设置更容易理解。
+        </p>
+        <div class="hero-actions">
+          <a href="/plans/" class="btn btn-secondary">了解套餐</a>
+          <a href="/start/" class="btn btn-outline">使用手册</a>
+          <a
+            href={SITE.affUrl}
+            target={SITE.affTarget}
+            rel={SITE.affRel}
+            class="btn btn-primary"
+          >
+            立即注册
+          </a>
+        </div>
+      </div>
+
+      <div class="hero-illustration">
+        <div class="abstract-card">
+          <div class="card-line-art">
+            <svg width="100%" height="240" viewBox="0 0 400 240" fill="none">
+              <path d="M20 200 C 120 40, 280 220, 380 40" stroke="#C06145" stroke-width="2.5" stroke-dasharray="6 6" />
+              <path d="M20 160 C 140 220, 260 20, 380 180" stroke="#312E37" stroke-width="2" />
+              <circle cx="120" cy="115" r="6" fill="#D9B96E" />
+              <circle cx="280" cy="130" r="6" fill="#C06145" />
+              <line x1="120" y1="115" x2="280" y2="130" stroke="#BAC9BD" stroke-width="1.5" />
+              <rect x="150" y="70" width="100" height="40" rx="2" fill="#F8F6F2" stroke="#312E37" stroke-width="1.5" />
+              <text x="200" y="94" font-family="serif" font-size="12" fill="#312E37" text-anchor="middle" font-weight="bold">IPLC ROUTE</text>
+            </svg>
+          </div>
+          <div class="card-caption font-mono">
+            <span>ARCHIVE SPEC // NO. 1065</span>
+            <span>STATUS: ACTIVE</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 3: Gsou Cloud服务内容概览 -->
+  <section class="overview-section">
+    <div class="container">
+      <div class="section-tag">SERVICE OVERVIEW</div>
+      <h2 class="section-title">Gsou Cloud 服务内容概览</h2>
+      <p class="section-subtitle">
+        Gsou Cloud 致力于提供多维度的网络加速支持，涵盖标准节点、中转专线及多终端兼容体系。
+      </p>
+
+      <div class="overview-grid">
+        <div class="overview-card">
+          <div class="overview-icon font-mono">01</div>
+          <h3>多档位流量套餐</h3>
+          <p>
+            提供每月 100GB、150GB 及 225GB 等多种弹性流量额度，支持月付、季付、半年付及年付灵活结算。
+          </p>
+        </div>
+
+        <div class="overview-card">
+          <div class="overview-icon font-mono">02</div>
+          <h3>混合路由传输</h3>
+          <p>
+            融合公网隧道中转与 IPLC 专线路由，覆盖香港、日本、台湾、新加坡、美国等热门多区域节点。
+          </p>
+        </div>
+
+        <div class="overview-card">
+          <div class="overview-icon font-mono">03</div>
+          <h3>全平台客户端</h3>
+          <p>
+            一键兼容 Clash、Shadowrocket、Sing-box、V2ray 等主流客户端，提供自动化订阅更新体验。
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 4: 完整套餐价格矩阵 -->
+  <section class="plans-section" id="plans">
+    <div class="container">
+      <div class="section-tag">PRICING MATRIX</div>
+      <h2 class="section-title">完整套餐价格矩阵</h2>
+      <p class="section-subtitle">
+        请在下方矩阵中选择适合您的付款周期（月付、季付、半年付、年付）。所有 12 项价格选项均已透明展示。
+      </p>
+
+      <PlanMatrix />
+    </div>
+  </section>
+
+  <!-- Section 5: 订阅付款周期说明 -->
+  <section class="cycles-explain-section">
+    <div class="container">
+      <div class="editorial-box">
+        <div class="section-tag">BILLING CYCLES</div>
+        <h2 class="section-title">订阅付款周期说明</h2>
+        <div class="editorial-content">
+          <p>
+            Gsou Cloud 的订阅服务设计了四个付款周期。用户选择季付、半年付或年付时，单位月份的折合费用享受递减优惠：
+          </p>
+          <ul>
+            <li><strong>月付：</strong>按单月独立结算，适合初次体验与短期试用；</li>
+            <li><strong>季付 (3个月)：</strong>按每 3 个月结算，折合单月成本下降约 20%；</li>
+            <li><strong>半年付 (6个月)：</strong>按每 6 个月结算，适合稳定日常使用；</li>
+            <li><strong>年付 (12个月)：</strong>按每 12 个月结算，享受最高优惠幅度（折合每月仅需 ¥15.0 起）。</li>
+          </ul>
+          <p>
+            注意：所有周期下的流量配额均按自然月重置，并非一次性全额发放。想深入了解换算技巧，请参阅<a href="/library/before-payment/">《付款前应该了解什么？》</a>。
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 6: 网络路径与协议知识 -->
+  <section class="tech-knowledge-section">
+    <div class="container">
+      <div class="section-tag">NETWORK KNOWLEDGE</div>
+      <h2 class="section-title">网络路径与协议知识</h2>
+      <p class="section-subtitle">
+        理解加密协议与中转路径的技术原理，能够帮助你更好地进行节点选择与故障排查。
+      </p>
+
+      <div class="tech-grid">
+        <div class="tech-card">
+          <h3>公网隧道与 IPLC 专线</h3>
+          <p>
+            公网隧道通过国内中转机房加密转发数据，平衡成本与性能；IPLC 专线通过内网点对点管道传输，避开国际出口拥堵，提供极低延迟与稳定性。
+          </p>
+          <a href="/library/route-journey/" class="tech-link">了解路由路径全过程 &rarr;</a>
+        </div>
+
+        <div class="tech-card">
+          <h3>Shadowsocks 与 V2ray 协议</h3>
+          <p>
+            Shadowsocks 拥有极高的传输效能；V2ray (vmess) 具备强健的伪装与握手鉴权能力。结合规则分流能够实现高效的网络访问。
+          </p>
+          <a href="/network/" class="tech-link">查看完整网络技术资料 &rarr;</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 7: 客户端维护与使用帮助 -->
+  <section class="client-help-section">
+    <div class="container">
+      <div class="section-tag">CLIENT MAINTENANCE</div>
+      <h2 class="section-title">客户端维护与使用帮助</h2>
+      <p class="section-subtitle">
+        从配置导入到日行维护，保持良好的使用习惯是确保网络长效稳定的关键。
+      </p>
+
+      <div class="help-columns">
+        <div class="help-col">
+          <h4>配置导入与更新</h4>
+          <p>复制订阅链接至 Clash 或 Shadowrocket 客户端，开启“自动定时更新订阅”，可确保节点列表与 IP 始终处于最新可用状态。</p>
+        </div>
+        <div class="help-col">
+          <h4>系统时间与握手校验</h4>
+          <p>加密握手强烈依赖精准的时间戳，若本地系统时间偏离标准时间过大将导致连接超时。请开启操作系统的“自动时间同步”。</p>
+        </div>
+        <div class="help-col">
+          <h4>错误日志自助解读</h4>
+          <p>当提示 Timeout 或 DNS Error 时，先核对本地 Wi-Fi 连通性与系统代理设置，逐步进行分层排查。</p>
+        </div>
+      </div>
+
+      <div class="action-banner">
+        <a href="/clients/" class="btn btn-secondary">进入客户端知识中心</a>
+        <a href="/library/maintenance-calendar/" class="btn btn-outline">阅读客户端维护日历</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 8: 七篇原创文章目录 -->
+  <section class="articles-directory-section">
+    <div class="container">
+      <div class="section-tag">KNOWLEDGE ARTICLES</div>
+      <h2 class="section-title">七篇原创知识文章</h2>
+      <p class="section-subtitle">
+        深入探讨网络连接、付款注意事项、流量行为、维护习惯及体验评测。
+      </p>
+
+      <div class="articles-grid">
+        {ARTICLE_LIST.map(art => (
+          <a href={art.urlPath} class="art-card">
+            <div class="art-category font-mono">{art.category}</div>
+            <h3 class="art-title">{art.title}</h3>
+            <p class="art-summary">{art.summary}</p>
+            <div class="art-footer font-mono">
+              <span>阅读全文 &rarr;</span>
+              <span>{art.readTime}</span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 9: 用户口碑与使用体验版块 (Part 10) -->
+  <UserExperienceSection />
+
+  <!-- Section 10: FAQ (Part 15) -->
+  <section class="faq-home-section" id="faq">
+    <div class="container">
+      <div class="section-tag">FREQUENTLY ASKED QUESTIONS</div>
+      <h2 class="section-title">常见问题解答</h2>
+      <p class="section-subtitle">
+        针对套餐购买、流量配额、网络路径及客户端维护整理的 10 项解答。
+      </p>
+
+      <FaqSection defaultOpen={true} />
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+/* Hero */
+.hero-section {
+  padding: 4.5rem 0 4rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 3.5rem;
+  align-items: center;
+}
+
+.hero-title {
+  font-size: 3.25rem;
+  line-height: 1.15;
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.03em;
+}
+
+.hero-highlight {
+  color: var(--color-terracotta);
+}
+
+.hero-subtitle {
+  font-size: 1.15rem;
+  color: var(--color-text-muted);
+  line-height: 1.65;
+  margin-bottom: 2.25rem;
+}
+
+.hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.abstract-card {
+  background-color: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  padding: 1.5rem;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
+}
+
+.card-caption {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  margin-top: 1rem;
+  border-top: 1px solid var(--color-border);
+  padding-top: 0.75rem;
+}
+
+/* Overview */
+.overview-section, .plans-section, .cycles-explain-section, .tech-knowledge-section, .client-help-section, .articles-directory-section, .faq-home-section {
+  padding: 4rem 0;
+}
+
+.overview-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.overview-card {
+  background-color: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  padding: 2rem;
+}
+
+.overview-icon {
+  font-size: 1.25rem;
+  color: var(--color-terracotta);
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.overview-card h3 {
+  font-size: 1.35rem;
+  margin-bottom: 0.75rem;
+}
+
+.overview-card p {
+  font-size: 0.95rem;
+  color: var(--color-text-muted);
+}
+
+/* Editorial Box */
+.editorial-box {
+  background-color: #FAF9F6;
+  border: 1px solid var(--color-border);
+  padding: 3rem;
+  border-left: 4px solid var(--color-graphite);
+}
+
+.editorial-content {
+  font-size: 1.05rem;
+  line-height: 1.8;
+}
+
+.editorial-content ul {
+  margin: 1.25rem 0;
+  padding-left: 1.5rem;
+}
+
+.editorial-content li {
+  margin-bottom: 0.5rem;
+}
+
+.editorial-content a {
+  color: var(--color-terracotta);
+  text-decoration: underline;
+}
+
+/* Tech Knowledge */
+.tech-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.tech-card {
+  background-color: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  padding: 2.25rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.tech-card h3 {
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+}
+
+.tech-card p {
+  color: var(--color-text-muted);
+  margin-bottom: 1.5rem;
+  flex-grow: 1;
+}
+
+.tech-link {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  color: var(--color-terracotta);
+  font-weight: 600;
+}
+
+/* Client help */
+.help-columns {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin-bottom: 2.5rem;
+}
+
+.help-col h4 {
+  font-size: 1.15rem;
+  margin-bottom: 0.75rem;
+  color: var(--color-graphite);
+}
+
+.help-col p {
+  font-size: 0.925rem;
+  color: var(--color-text-muted);
+  line-height: 1.6;
+}
+
+.action-banner {
+  display: flex;
+  gap: 1rem;
+}
+
+/* Articles Directory Grid */
+.articles-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.art-card {
+  background-color: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  transition: var(--transition);
+}
+
+.art-card:hover {
+  border-color: var(--color-terracotta);
+  transform: translateY(-2px);
+}
+
+.art-category {
+  font-size: 0.75rem;
+  color: var(--color-terracotta);
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+
+.art-title {
+  font-size: 1.15rem;
+  line-height: 1.4;
+  margin-bottom: 0.75rem;
+  color: var(--color-graphite);
+}
+
+.art-summary {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  flex-grow: 1;
+}
+
+.art-footer {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: var(--color-terracotta);
+  border-top: 1px solid var(--color-border);
+  padding-top: 0.75rem;
+  font-weight: 600;
+}
+
+@media (max-width: 1024px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+  .overview-grid, .articles-grid, .help-columns {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .hero-title {
+    font-size: 2.5rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .overview-grid, .tech-grid, .help-columns, .articles-grid {
+    grid-template-columns: 1fr;
+  }
+  .hero-title {
+    font-size: 2rem;
+  }
+  .editorial-box {
+    padding: 1.5rem;
+  }
+}
+</style>

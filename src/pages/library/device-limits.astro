@@ -1,0 +1,112 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { SITE } from '../../data/site';
+
+const articleMeta = {
+  title: 'Gsou Cloud套餐与设备数量有什么关系？多设备使用前需要核实的条件',
+  description: '澄清已添加配置设备与并发在线连接设备的区别，掌握多终端共享 Gsou Cloud 订阅时的流量分配、网络切换及安全管理要点。',
+  publishDate: '2026-10-09',
+  path: '/library/device-limits/'
+};
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    'headline': articleMeta.title,
+    'description': articleMeta.description,
+    'datePublished': articleMeta.publishDate,
+    'mainEntityOfPage': {
+      '@type': 'WebPage',
+      '@id': `${SITE.domain}${articleMeta.path}`
+    },
+    'publisher': {
+      '@type': 'Organization',
+      'name': SITE.brandName
+    }
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    'itemListElement': [
+      { '@type': 'ListItem', 'position': 1, 'name': '首页', 'item': `${SITE.domain}/` },
+      { '@type': 'ListItem', 'position': 2, 'name': '知识文章', 'item': `${SITE.domain}/library/` },
+      { '@type': 'ListItem', 'position': 3, 'name': articleMeta.title, 'item': `${SITE.domain}${articleMeta.path}` }
+    ]
+  }
+];
+---
+
+<BaseLayout title={`${articleMeta.title} | ${SITE.brandName}`} description={articleMeta.description} canonicalPath={articleMeta.path} jsonLd={jsonLd}>
+  <div class="container" style="padding-top: 3rem; padding-bottom: 4rem;">
+    <nav class="breadcrumb">
+      <a href="/">首页</a> <span class="sep">/</span>
+      <a href="/library/">知识文章</a> <span class="sep">/</span>
+      <span>正文</span>
+    </nav>
+
+    <article class="article-reader">
+      <header class="article-header">
+        <div class="article-meta-top">
+          <span>设备管理</span>
+          <span>•</span>
+          <time>{articleMeta.publishDate}</time>
+        </div>
+        <h1 class="article-title">{articleMeta.title}</h1>
+        <p class="article-lead">
+          在多设备普及的今天，很多人拥有手机、笔记本电脑、平板甚至家庭智能设备。在开通订阅前厘清设备限制逻辑，能避免因连接数超限而影响日常使用。
+        </p>
+      </header>
+
+      <div class="article-body">
+        <h2>一、必须澄清的核心概念：已导入设备 vs 同时在线连接</h2>
+        <p>
+          在讨论网络订阅的设备限制时，最容易混淆的两个概念是“配置保存数”与“并发在线连接数”：
+        </p>
+        <ul>
+          <li>
+            <strong>已导入配置设备：</strong>指您在个人设备（如 1 台 iPhone、1 台 MacBook、1 台 iPad）的客户端中下载并保存了订阅链接的数量。绝大多数服务并不限制您在多少台设备上保存配置文件。
+          </li>
+          <li>
+            <strong>同时在线连接设备：</strong>指在同一时间点，正在开启代理并向中转节点发送或接收数据的终端数量。网络服务的并发限制通常严格针对这一指标。
+          </li>
+        </ul>
+        <p>
+          了解这一区别后，您完全可以在所有的个人终端上提前配置好订阅，只要同一时刻并发连接的设备数量保持在允许范围内，就不会引发连接断开。
+        </p>
+
+        <h2>二、不同套餐与多设备场景的匹配原则</h2>
+        <p>
+          公开资料中，针对不同的套餐档位（SIMPLE 100GB、LITE 150GB、PRO 225GB），网络服务会设置相应的带宽与连接并发调优。
+        </p>
+        <p>
+          如果您仅有个人单手机加笔记本电脑的使用场景，SIMPLE 或 LITE 套餐已能提供充裕的并发空间；但如果您需要与家人共享订阅，或在多台设备上同时开启大流量高并发传输（如一边播放 4K 视频、一边进行大文件同步），则建议优先考虑带宽上限更高、调度能力更强、包含 225GB 流量的 PRO 套餐。详情可查阅<a href="/plans/">套餐规格表</a>。
+        </p>
+
+        <h2>三、多设备共享订阅时的四大注意事项</h2>
+        <p>
+          在多台终端设备上协同使用同一个订阅账号时，请务必关注以下几点：
+        </p>
+        <ol>
+          <li>
+            <strong>流量消耗加速：</strong>多台设备共同消耗同一个月度流量池，需要格外关注后台大文件同步行为，详情可参阅<a href="/library/data-behavior/">流量使用行为分析</a>；
+          </li>
+          <li>
+            <strong>移动网络与 Wi-Fi 频繁切换：</strong>手机从家庭 Wi-Fi 切换到 5G 移动网络时，客户端可能重新发起 TCP 握手，短时间内可能占用双重连接通道；
+          </li>
+          <li>
+            <strong>严禁未经授权的公开分享：</strong>将个人订阅公开分享至社交网络可能导致大量陌生设备瞬间挤爆并发通道，甚至导致账号被系统自动封禁；
+          </li>
+          <li>
+            <strong>客户端规则保持统一：</strong>建议在所有设备上统一配置分流规则，避免不同设备由于规则冲突造成访问体验不一致。
+          </li>
+        </ol>
+
+        <h2>四、总结与建议</h2>
+        <p>
+          合理的设备使用管理不仅能提升单台终端的连接速度，还能让团队或个人的网络资源得到最优化利用。如需开通适用于多设备连接的稳定订阅，欢迎通过官方商业链接<a href={SITE.affUrl} target={SITE.affTarget} rel={SITE.affRel}>查看 Gsou Cloud 选购方案</a>。
+        </p>
+      </div>
+    </article>
+  </div>
+</BaseLayout>

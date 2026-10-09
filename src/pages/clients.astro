@@ -1,0 +1,177 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE } from '../data/site';
+
+const pageTitle = 'Gsou Cloud 客户端知识与配置教程';
+const pageDescription = '覆盖 Windows, macOS, iOS, Android 全平台 Clash, Shadowrocket, Sing-box 等主流客户端的订阅配置与规则设定。';
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    'itemListElement': [
+      { '@type': 'ListItem', 'position': 1, 'name': '首页', 'item': `${SITE.domain}/` },
+      { '@type': 'ListItem', 'position': 2, 'name': '客户端知识', 'item': `${SITE.domain}/clients/` }
+    ]
+  }
+];
+---
+
+<BaseLayout title={`${pageTitle} | ${SITE.brandName}`} description={pageDescription} canonicalPath="/clients/" jsonLd={jsonLd}>
+  <div class="container" style="padding-top: 3rem; padding-bottom: 5rem;">
+    <nav class="breadcrumb">
+      <a href="/">首页</a> <span class="sep">/</span>
+      <span>客户端知识</span>
+    </nav>
+
+    <header style="margin-bottom: 3.5rem;">
+      <div class="section-tag">CLIENT ARCHIVE & KNOWLEDGE</div>
+      <h1 class="section-title">全平台客户端配置知识</h1>
+      <p class="section-subtitle">
+        Gsou Cloud 广泛兼容主流开源与商业网络客户端。根据您的操作系统类型挑选适合的应用程序并完成订阅导入。
+      </p>
+    </header>
+
+    <div class="client-grid">
+      <!-- Windows -->
+      <div class="client-card">
+        <div class="platform-tag font-mono">WINDOWS OS</div>
+        <h2>Clash Verge Rev / Sing-box</h2>
+        <p>推荐在 Windows 10/11 系统上使用现代化的 Clash Verge Rev 客户端，界面简洁且原生支持 Tun 模式虚拟网卡接管。</p>
+        <ul>
+          <li>复制订阅 URL 粘贴至“Profiles”页面；</li>
+          <li>开启“Auto-Update”以保持节点最新；</li>
+          <li>选择“Rule”代理模式实现境内外精准分流。</li>
+        </ul>
+      </div>
+
+      <!-- macOS -->
+      <div class="client-card">
+        <div class="platform-tag font-mono">MACOS</div>
+        <h2>Clash Verge / ClashX Meta</h2>
+        <p>在 macOS 上提供了高度集成的系统状态栏接管体验，原生支持 Apple Silicon M系列芯片。</p>
+        <ul>
+          <li>点击状态栏图标，选择“配置” -> “复制订阅”；</li>
+          <li>勾选“设置为系统代理”；</li>
+          <li>可搭配“增强模式”处理终端 Shell 代理请求。</li>
+        </ul>
+      </div>
+
+      <!-- iOS -->
+      <div class="client-card">
+        <div class="platform-tag font-mono">IOS / IPADOS</div>
+        <h2>Shadowrocket (小火箭) / Quantumult X</h2>
+        <p>iOS 平台上最为流行且功能强大的代理客户端，支持一键 URL 链接拉取与协议自动识别。</p>
+        <ul>
+          <li>在 Safari 中点击后台的“一键导入”按钮；</li>
+          <li>选择全局路由为“配置 (Config)”；</li>
+          <li>初次开启时允许 iOS 创建 VPN 接入权限。</li>
+        </ul>
+      </div>
+
+      <!-- Android -->
+      <div class="client-card">
+        <div class="platform-tag font-mono">ANDROID</div>
+        <h2>Clash for Android / v2rayNG</h2>
+        <p>适用于各大品牌安卓手机，支持按应用分流（App Bypass）以防止国内银行 App 走代理。</p>
+        <ul>
+          <li>在“配置”中添加 URL 并命名为 Gsou Cloud；</li>
+          <li>进入“路由”设置，开启“应用分流”；</li>
+          <li>在节点选择面板中点击延迟测速并勾选目标节点。</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Related Articles box -->
+    <div class="client-related">
+      <h3>相关维护与故障知识</h3>
+      <p>如果在配置客户端过程中遇到连接超时、订阅拉取失败或设备超限等提示，推荐参考以下专题文章：</p>
+      <div class="links-row">
+        <a href="/library/maintenance-calendar/">客户端配置维护日历 &rarr;</a>
+        <a href="/library/error-messages/">连接错误信息解答 &rarr;</a>
+        <a href="/library/device-limits/">多设备使用核实条件 &rarr;</a>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+.client-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  margin-bottom: 4rem;
+}
+
+.client-card {
+  background-color: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  padding: 2.25rem;
+  border-radius: 4px;
+}
+
+.platform-tag {
+  font-size: 0.8rem;
+  color: var(--color-terracotta);
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+
+.client-card h2 {
+  font-size: 1.4rem;
+  margin-bottom: 0.75rem;
+}
+
+.client-card p {
+  font-size: 0.95rem;
+  color: var(--color-text-muted);
+  line-height: 1.6;
+  margin-bottom: 1.25rem;
+}
+
+.client-card ul {
+  padding-left: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  color: var(--color-text-dark);
+}
+
+.client-related {
+  background-color: #FAF9F6;
+  border: 1px solid var(--color-border);
+  padding: 2.5rem;
+  border-radius: 4px;
+}
+
+.client-related h3 {
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
+}
+
+.client-related p {
+  font-size: 0.95rem;
+  color: var(--color-text-muted);
+  margin-bottom: 1.25rem;
+}
+
+.links-row {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.links-row a {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  color: var(--color-terracotta);
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .client-grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
